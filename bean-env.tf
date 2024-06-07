@@ -1,6 +1,6 @@
 resource "aws_elastic_beanstalk_environment" "vprofile-bean-pr0d" {
   name                = "vprofile-bean-pr0d"
-  application         = aws_elastic_beanstalk_application.vprofile-prod.name
+  application         = aws_elastic_beanstalk_application.vprofile-pr0d.name
   solution_stack_name = "64bit Amazon Linux 2023 v5.1.7 running Tomcat 9 Corretto 11"
   cname_prefix        = "vprofile-bean-pr0d-domain"
   setting {
@@ -61,7 +61,7 @@ resource "aws_elastic_beanstalk_environment" "vprofile-bean-pr0d" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "environment"
-    value     = "prod"
+    value     = "pr0d"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
