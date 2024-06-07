@@ -12,7 +12,7 @@ resource "aws_instance" "vprofile-bastion" {
   }
 
   provisioner "file" {
-    content     = templatefile("templates/db-deploy.tmpl", { rds-endpoint = aws_db_instance.vprofile-rds.address, dbuser = var.dbuser, dbpass = var.dbpass })
+    content     = templatefile("templates/db-deploy.tmpl", { rds_endpoint = aws_db_instance.vprofile-rds.address, dbuser = var.dbuser, dbpass = var.dbpass })
     destination = "/tmp/vprofile-dbdeploy.sh"
   }
 
@@ -24,7 +24,6 @@ resource "aws_instance" "vprofile-bastion" {
   }
 
   connection {
-    type        = "ssh"
     user        = var.USERNAME
     private_key = file(var.PRIV_KEY_PATH)
     host        = self.public_ip
