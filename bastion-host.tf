@@ -12,19 +12,13 @@ resource "aws_instance" "vprofile-bastion" {
   }
 
   provisioner "file" {
-    content     = templatefile("templates/db-deploy.tmpl", {
-      rds_endpoint = aws_db_instance.vprofile-rds.address,
-      dbuser       = var.dbuser,
-      dbpass       = var.dbpass
-    })
+    content     = templatefile("templates/db-deploy.tmpl", { rds-endpoint = aws_db_instance.vprofile-rds.address, dbuser = var.dbuser, dbpass = var.dbpass })
     destination = "/tmp/vprofile-dbdeploy.sh"
-
-    connection {
-      type        = "ssh"
-      user        = var.USERNAME
-      private_key = file(var.PRIV_KEY_PATH)
-      host        = self.public_ip
-    }
+  }
+  connection {
+    user        = var.USERNAME
+    private_key = file(var.PRIV_KEY_PATH)
+    host        = self.public_ip
   }
 
   provisioner "remote-exec" {
@@ -32,17 +26,7 @@ resource "aws_instance" "vprofile-bastion" {
       "chmod +x /tmp/vprofile-dbdeploy.sh",
       "sudo /tmp/vprofile-dbdeploy.sh"
     ]
-
-    connection {
-      type        = "ssh"
-      user        = var.USERNAME
-      private_key = file(var.PRIV_KEY_PATH)
-      host        = self.public_ip
-    }
   }
-
-  # Ensure the instance gets a public IP if needed
-  associate_public_ip_address = true
 
   depends_on = [aws_db_instance.vprofile-rds]
 }
