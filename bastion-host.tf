@@ -15,11 +15,6 @@ resource "aws_instance" "vprofile-bastion" {
     content     = templatefile("templates/db-deploy.tmpl", { rds-endpoint = aws_db_instance.vprofile-rds.address, dbuser = var.dbuser, dbpass = var.dbpass })
     destination = "/tmp/vprofile-dbdeploy.sh"
   }
-  connection {
-    user        = var.USERNAME
-    private_key = file(var.PRIV_KEY_PATH)
-    host        = self.public_ip
-  }
 
   provisioner "remote-exec" {
     inline = [
@@ -28,5 +23,10 @@ resource "aws_instance" "vprofile-bastion" {
     ]
   }
 
+  connection {
+    user        = var.USERNAME
+    private_key = file(var.PRIV_KEY_PATH)
+    host        = self.public_ip
+  }
   depends_on = [aws_db_instance.vprofile-rds]
 }
