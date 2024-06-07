@@ -26,7 +26,7 @@ resource "aws_instance" "vprofile-bastion" {
   connection {
     user        = var.USERNAME
     private_key = file(var.PRIV_KEY_PATH)
-    host        = aws_instance.vprofile-bastion.public_ip
+    host        = self.public_ip
   }
   depends_on = [aws_db_instance.vprofile-rds]
 }
