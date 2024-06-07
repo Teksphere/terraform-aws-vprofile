@@ -1,8 +1,8 @@
-resource "aws_elastic_beanstalk_environment" "vprofile-bean-pr0d" {
-  name                = "vprofile-bean-pr0d"
-  application         = aws_elastic_beanstalk_application.vprofile-pr0d.name
+resource "aws_elastic_beanstalk_environment" "teksphere-bean-prod" {
+  name                = "vprofile-bean-prod"
+  application         = aws_elastic_beanstalk_application.teksphere-prod.name
   solution_stack_name = "64bit Amazon Linux 2023 v5.1.7 running Tomcat 9 Corretto 11"
-  cname_prefix        = "vprofile-bean-pr0d-domain"
+  cname_prefix        = "teksphere-bean-prod-domain"
   setting {
     name      = "VPCId"
     namespace = "aws:ec2:vpc"
@@ -61,7 +61,7 @@ resource "aws_elastic_beanstalk_environment" "vprofile-bean-pr0d" {
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
     name      = "environment"
-    value     = "pr0d"
+    value     = "prod"
   }
   setting {
     namespace = "aws:elasticbeanstalk:application:environment"
